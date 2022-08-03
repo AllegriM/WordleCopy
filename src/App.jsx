@@ -1,15 +1,26 @@
-import { VStack, Heading } from '@chakra-ui/react'
-import Keyboard from './components/Keyboard'
-import GuessRows from './components/GuessRows'
 import './App.css'
+import Wordle from './components/Wordle'
+import { useEffect, useState } from 'react';
+import { getDailyWord } from './services/fetchDailyWord';
+import { Stack } from '@chakra-ui/react';
 
-function App () {
+export const WORD_LENGTH = 5
+export const MAX_ROWS = 6;
+
+
+function App() {
+
+  const [todayWord, setTodayWord] = useState("")
+
+  useEffect(() => {
+    const misteryWord = getDailyWord()
+    return setTodayWord(misteryWord.toUpperCase())
+  }, [])
+
   return (
-    <VStack className="App" py={3} pb={10} justify='space-between' align=''>
-      <Heading as='h2'>Truchordle</Heading>
-      <GuessRows />
-      <Keyboard />
-    </VStack>
+    <Stack className='App'>
+      <Wordle secretWord={todayWord} />
+    </Stack>
   )
 }
 
