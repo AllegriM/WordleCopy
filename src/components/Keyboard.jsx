@@ -9,7 +9,7 @@ export const keys = ['q', 'w', 'e', 'r',
     'x', 'c', 'v', 'b',
     'n', 'm']
 
-function Keyboard() {
+function Keyboard( ) {
 
     return (
         // Tecla
