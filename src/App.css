@@ -17,6 +17,7 @@ body{
 
 .deleteIcon{
   margin: 0 auto;
+  flex-shrink: 0;
 }
 .icon-svg{
   flex-shrink: 0;

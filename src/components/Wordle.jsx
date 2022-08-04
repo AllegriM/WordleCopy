@@ -48,7 +48,30 @@ function Wordle() {
         }
     }
 
+    const letterClickKeyboard = (key) => {
+        const letter = key
+        console.log(letter)
+        if (letter === 'Backspace' && currentWord.length > 0) {
+            return onBackspace()
+        }
+        if (letter === 'Enter' && currentWord.length === 5 && currentGuessRow <= MAX_ROWS) {
+            if (gameStatus === "Win" || gameStatus === "Lose") {
+                return
+            }
+            return onEnter()
+        }
+        if (keys.includes(letter)) {
+            const newWord = currentWord + letter
+            if (newWord.length <= 5) setCurrentWord(newWord.toUpperCase())
+            else return
+        }
+    }
+
     const onEnter = async () => {
+
+        if (currentWord.length < 5){
+            return
+        }
         if (secretWord === currentWord) {
             setCompletedWords([...completedWords, currentWord])
             setGameStatus("Win")
@@ -163,7 +186,7 @@ function Wordle() {
                             : null
                     }
                 </Stack>
-                <Keyboard />
+                <Keyboard deleteLetter={onBackspace} submitWord={onEnter} pressLetter={letterClickKeyboard} />
             </Stack>
         </Stack>
     )
