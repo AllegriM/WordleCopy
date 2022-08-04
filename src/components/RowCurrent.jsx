@@ -4,11 +4,13 @@ import RowBox from "./RowBox"
 function RowCurrent({ words }) {
 
     const wordArray = words.split("")
+    console.log(words)
 
     return (
         <Stack direction='row' justify='center' mt='10px'>
             {wordArray.map((letter, index) => {
                 return (
+                    
                     <RowBox key={index} word={letter} index={index} />
                 )
             })}

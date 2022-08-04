@@ -1,5 +1,20 @@
 import { Stack } from "@chakra-ui/react"
+import { motion } from "framer-motion"
+import { AnimatePresence } from "framer-motion"
 import RowBox from "./RowBox"
+
+const AnimatedBox = motion(Stack)
+
+const variants = {
+    hidden: { rotateY: 90 },
+    show: ({delay}) => ({
+        rotateY: 0,
+        transition: {
+            delay,
+            duration: .5
+        }
+    })
+}
 
 function RowCompleted({ words, solution }) {
 
@@ -14,17 +29,28 @@ function RowCompleted({ words, solution }) {
             return "absent"
         }
     }
-    
+
     const arr = Array.from(Array(5));
     return (
-        <Stack direction='row' justify='center' mt='10px'>
-            {arr.map((_, index) => {
-                return (
-                    <RowBox key={index} word={words[index]} index={index} status={CheckLetter(words[index], index)} />
-                )
-            })}
-        </Stack>
+        <AnimatePresence>
+            <Stack direction='row' justify='center' mt='10px'>
+                {arr.map((_, index) => {
+                    return (
+                        <AnimatedBox 
+                        key={index}
+                        custom={{delay: (index + 1) * 0.2}} 
+                        variants={variants}
+                        initial='hidden'
+                        animate='show'
+                        >
+                            <RowBox word={words[index]} index={index} status={CheckLetter(words[index], index)} />
+                        </AnimatedBox>
+                    )
+                })}
+            </Stack>
+        </AnimatePresence>
     )
 }
 
 export default RowCompleted
+
